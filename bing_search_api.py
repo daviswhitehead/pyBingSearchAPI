@@ -1,7 +1,7 @@
 '''
 This is designed for the new Azure Marketplace Bing Search API (released Aug 2012)
 
-Inspired by https://github.com/mlagace/Python-SimpleBing and 
+Inspired by https://github.com/mlagace/Python-SimpleBing and
 http://social.msdn.microsoft.com/Forums/pl-PL/windowsazuretroubleshooting/thread/450293bb-fa86-46ef-be7e-9c18dfb991ad
 '''
 
@@ -10,7 +10,7 @@ import string
 
 class BingSearchAPI():
     bing_api = "https://api.datamarket.azure.com/Data.ashx/Bing/Search/v1/Composite?"
-    
+
     def __init__(self, key):
         self.key = key
 
@@ -24,10 +24,10 @@ class BingSearchAPI():
         request = string.replace(request, ' ', '%20')
         request = string.replace(request, ':', '%3a')
         return request
-        
+
     def search(self, sources, query, params):
         ''' This function expects a dictionary of query parameters and values.
-            Sources and Query are mandatory fields. 
+            Sources and Query are mandatory fields.
             Sources is required to be the first parameter.
             Both Sources and Query requires single quotes surrounding it.
             All parameters are case sensitive. Go figure.
@@ -39,13 +39,14 @@ class BingSearchAPI():
         request =  'Sources="' + sources    + '"'
         request += '&Query="'  + str(query) + '"'
         for key,value in params.iteritems():
-            request += '&' + key + '=' + str(value) 
+            request += '&' + key + '=' + str(value)
         request = self.bing_api + self.replace_symbols(request)
         return requests.get(request, auth=(self.key, self.key))
 
 
 if __name__ == "__main__":
     my_key = "[your key]"
+    my_key = "7maPPgOGdX2eR7fGqWMwODIFFdhSsnBQ+LeuSc3yy70"
     query_string = "Brad Pitt"
     bing = BingSearchAPI(my_key)
     params = {'ImageFilters':'"Face:Face"',
